@@ -1,0 +1,25 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: auto;
+    font-family: Roboto, sans-serif;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+}
+
+.top {
+    display: flex;
+    flex-direction: column;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+}
+
+.library {
+    display: table;
+}
