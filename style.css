@@ -23,3 +23,11 @@ html, body {
 .library {
     display: table;
 }
+
+.popupForm {
+    display:none;
+}
+
+.bookData {
+    width: 300px;
+}

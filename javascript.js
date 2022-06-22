@@ -59,5 +59,15 @@ buttons.forEach((button) => {
 
 function buttonPress(userSelection){
     console.log('user requests adding a book');
+    openForm()
     addBookToLibrary()
 }
+
+function openForm() {
+    document.getElementById('popupForm').style.display = 'block';
+}
+
+function closeForm() {
+    document.getElementById('popupForm').style.display = 'none';
+}
+
