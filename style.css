@@ -24,10 +24,6 @@ html, body {
     display: table;
 }
 
-.popupForm {
-    display:none;
-}
-
-.bookData {
-    width: 300px;
+#bookData {
+    display: none;
 }

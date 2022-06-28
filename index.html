@@ -14,12 +14,12 @@
 
         <div class="top">
             <div class="title">
-                <p> Library </p>
+                <p> Personal Library </p>
             </div>
             <div class="expand-library">
-                <button id="add-book"> Add Book </button>
-                <div class="popupForm" id="popupForm">
-                    <form action="#" class="bookData">
+                <button id="addBook"> Add Book </button>
+                <div id="bookData">
+                    <form action="#" id="bookForm">
                         <h2> Fill Form </h2>
                         <div>
                             <label for="title"> Title: </label>
@@ -40,7 +40,10 @@
                         <div>
                             <input type="radio" id="hasNotRead" name="read" value="hasNotRead">
                             <label for="hasNotRead">Has Not Read</label>
-                        </div>   
+                        </div> 
+                        <div> 
+                            <button id="submitBook" type="button" form="bookForm"> Submit </button>
+                        </div>  
                     </form>
                 </div>
             </div>
@@ -49,7 +52,18 @@
 
         <div class="center">
 
-            <div class="library">
+            <div class="librarySection">
+
+                <table id="library">
+                    <tr>
+                        <th> Title </th>
+                        <th> Author </th>
+                        <th> Pages </th>
+                        <th> Read </th>
+                    </tr>
+
+
+                </table>
 
                 <!-- add books here -->
                 <!-- put them in a table -->
