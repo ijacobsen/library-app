@@ -1,16 +1,19 @@
 /*
 
+DONE
 - write a function that loops through the array and
 displays each book on the page
 
 - display them in a table, or each on their own card
 
+DONE
 - add a NEW BOOK button that brings up a form allowing users
 to input the details for the book:
     - author
     - title
     - number of pages
     - whether it's been read
+
 
 - add a button on each book's display to remove the book from
 the library
@@ -77,15 +80,21 @@ function displayBooks() {
 bring up popup form
 =======================================
 */
-var addNewBook = document.getElementById('addBook');
-addNewBook.addEventListener('click', newBookPopUp)
-function newBookPopUp () {
-    openForm();
-    console.log('user requests adding book')
+
+const modal = document.querySelector('.expand-library');
+const trigger = document.querySelector('#addBook');
+const closeButton = document.querySelector('#close-button');
+function toggleModal() {
+    modal.classList.toggle('show-bookData');
 }
-function openForm() {
-    document.getElementById('bookData').style.display = 'block';
+function windowOnClick(event) {
+    if (event.target == modal) {
+        toggleModal();
+    }
 }
+trigger.addEventListener('click', toggleModal);
+closeButton.addEventListener('click', toggleModal);
+window.addEventListener('click', windowOnClick);
 
 /*
 =======================================
@@ -105,7 +114,7 @@ function addBookToLibrary(){
     console.log(book);
     myLibrary.push(book);
     console.log(myLibrary);
-    closeForm();
+    toggleModal();
     displayBooks();
 }
 
