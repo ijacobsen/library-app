@@ -81,3 +81,18 @@ html, body {
     transform: scale(1.0);
     transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
 }
+
+.bookCardShelf {
+    display: grid;
+    grid-auto-rows: 50px;
+    grid-auto-columns: 50px;
+    background: red;
+    background-color: blueviolet;
+}
+
+.bookCard {
+    display: flex;
+    flex-direction: column;
+    background-color: bisque;
+    background: green;
+}

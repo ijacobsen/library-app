@@ -43,10 +43,30 @@ function Book(title, author, pages, been_read){
     this.been_read = been_read;
 }
 
-function closeForm() {
-    document.getElementById('bookData').style.display = 'none';
+function displayBookCards() {
+
+    // clear current shelf
+    let shelf = document.getElementById('bookCardShelf');
+    shelf.replaceChildren();
+    
+    // populate new shelf
+    for (var idx = 0; idx < myLibrary.length; idx++){
+        entry = myLibrary[idx]
+        const newCard = document.createElement('div');
+        newCard.setAttribute('class', 'bookCard')
+        newCard.setAttribute('id', 'book-' + idx)
+        for (var key in entry){
+            const attr = document.createElement('div');
+            const attrText = document.createTextNode(key + ': ' + entry[key]);
+            attr.appendChild(attrText);
+            newCard.appendChild(attr);
+        }
+        shelf.appendChild(newCard);
+    }
+
 }
 
+// display books as a table
 function displayBooks() {
     
     // delete current table
@@ -111,11 +131,10 @@ function addBookToLibrary(){
     let pages = data.get('pages');
     let been_read = data.get('read');
     let book = new Book(title, author, pages, been_read);
-    console.log(book);
     myLibrary.push(book);
-    console.log(myLibrary);
     toggleModal();
     displayBooks();
+    displayBookCards();
 }
 
 /*
