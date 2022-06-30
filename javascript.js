@@ -33,9 +33,9 @@ globals
 */
 
 let myLibrary = []
-function Book(author, title, pages, been_read){
-    this.author = author;
+function Book(title, author, pages, been_read){
     this.title = title;
+    this.author = author;
     this.pages = pages;
     this.been_read = been_read;
 }
@@ -45,22 +45,31 @@ function closeForm() {
 }
 
 function displayBooks() {
-    /*
+    
     // delete current table
-    let table = document.getElementById('library');
-    librarySection = table.parentNode;
-    table.remove();
-    */
-
+    let tbl = document.getElementById('bookTable');
+    tbl.remove();
+    
     // create new table
-    let table = document.getElementById('library');
+    var author, title, pages, been_read;
+    tbl = document.createElement('table');
+    const tblBody = document.createElement('tbody');
     for (var idx = 0; idx < myLibrary.length; idx++){
-        let newRow = table.insertRow(-1);
-        let newCell = newRow.insertCell(0);
-        let newText = document.createTextNode('New row');
-        newCell.appendChild(newText);
+        const row = document.createElement('tr');
+        entry = myLibrary[idx];
+        for (var key in entry){
+            const cell = document.createElement('td');
+            const cellText = document.createTextNode(entry[key]);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+        }
+
+        tblBody.appendChild(row);
     }
-    //librarySection.appendChild(table);
+    tbl.appendChild(tblBody);
+    tbl.setAttribute('id', 'bookTable')
+    let librarySection = document.getElementById('librarySection');
+    librarySection.appendChild(tbl);
 }
 
 /*
@@ -88,11 +97,11 @@ submitBook.addEventListener('click', addBookToLibrary)
 function addBookToLibrary(){
     var form = document.getElementById('bookForm');
     const data = new FormData(form);
-    let author = data.get('author');
     let title = data.get('title');
+    let author = data.get('author');
     let pages = data.get('pages');
     let been_read = data.get('read');
-    let book = new Book(author, title, pages, been_read);
+    let book = new Book(title, author, pages, been_read);
     console.log(book);
     myLibrary.push(book);
     console.log(myLibrary);
