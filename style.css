@@ -82,12 +82,18 @@ html, body {
     transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
 }
 
-.bookCardShelf {
+#bookCardShelf {
     display: grid;
-    grid-auto-rows: 50px;
-    grid-auto-columns: 50px;
     background: red;
     background-color: blueviolet;
+
+    place-items: center;
+    place-content: center;
+    place-self: center;
+    grid-template-columns: 2rem 2rem 2rem;
+    grid-template-rows: auto;
+    column-gap: 8rem;
+    row-gap: 1rem;
 }
 
 .bookCard {
@@ -95,4 +101,6 @@ html, body {
     flex-direction: column;
     background-color: bisque;
     background: green;
+    min-height: 11rem;
+    min-width: 9rem;
 }
