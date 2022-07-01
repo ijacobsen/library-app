@@ -43,6 +43,66 @@ function Book(title, author, pages, been_read){
     this.been_read = been_read;
 }
 
+function Card(idx){
+    this.bookId = idx;
+}
+
+Card.prototype.removeBook = function(){
+    console.log('remove book id ' + this.bookId)
+}
+
+Card.prototype.fillCard = function(entry){
+
+    this.HTMLContent = document.createElement('div');
+    this.HTMLContent.setAttribute('class', 'bookCard');
+
+    console.log(entry)
+
+    // set title
+    let attr = document.createElement('div');
+    let attrText = document.createTextNode('Title: ' + entry['title']);
+    attr.appendChild(attrText);
+    this.HTMLContent.appendChild(attr);
+
+    // set author
+    attr = document.createElement('div');
+    attrText = document.createTextNode('Author: ' + entry['author']);
+    attr.appendChild(attrText);
+    this.HTMLContent.appendChild(attr);
+
+    // set pages
+    attr = document.createElement('div');
+    attrText = document.createTextNode('Pages: ' + entry['pages']);
+    attr.appendChild(attrText);
+    this.HTMLContent.appendChild(attr);
+
+    // set read status
+    attr = document.createElement('div');
+    attrText = document.createTextNode('Read: ' + (entry['been_read'] == 'hasRead' ? 'Yes' : 'No'));
+    attr.appendChild(attrText);
+    this.HTMLContent.appendChild(attr);
+
+    /*
+    const newCard = document.createElement('div');
+    newCard.setAttribute('class', 'bookCard')
+    newCard.setAttribute('id', 'book-' + this.bookId);
+    for (var key in entry){
+        const attr = document.createElement('div');
+        const attrText = document.createTextNode(key + ': ' + entry[key]);
+        attr.appendChild(attrText);
+        newCard.appendChild(attr);
+    }
+    */
+
+
+    /*
+    const removeButton = document.createElement('button');
+    removeButton.addEventListener('click', this.removeBook);
+    removeButton.setAttribute('id', `remove-${this.bookId}`);
+    newCard.appendChild(removeButton);
+    */
+}
+
 function displayBookCards() {
 
     // clear current shelf
@@ -52,16 +112,10 @@ function displayBookCards() {
     // populate new shelf
     for (var idx = 0; idx < myLibrary.length; idx++){
         entry = myLibrary[idx]
-        const newCard = document.createElement('div');
-        newCard.setAttribute('class', 'bookCard')
-        newCard.setAttribute('id', 'book-' + idx)
-        for (var key in entry){
-            const attr = document.createElement('div');
-            const attrText = document.createTextNode(key + ': ' + entry[key]);
-            attr.appendChild(attrText);
-            newCard.appendChild(attr);
-        }
-        shelf.appendChild(newCard);
+        let newCard = new Card(idx);
+        newCard.fillCard(entry);
+        console.log(newCard);
+        shelf.appendChild(newCard.HTMLContent);
     }
 
 }
