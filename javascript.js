@@ -36,8 +36,15 @@ the library
 globals
 =======================================
 */
+// This has to be before the initial usage of retrieveLibrary
+const localStorageKeys = {
+    LIBRARY_KEY: 'myLibrary',
+};
 
-let myLibrary = [];
+// Now that we have localStorage persistence,
+// every action we take on this library should be persisted
+let myLibrary = retrieveLibrary();
+
 function Book(title, author, pages, been_read) {
     this.title = title;
     this.author = author;
@@ -54,6 +61,7 @@ Card.prototype.removeBook = function () {
 
     // remove card from library
     myLibrary.splice(this.id, 1);
+    persistLibrary(myLibrary);
 
     // rerender book shelf
     displayBookCards();
@@ -139,6 +147,14 @@ function displayBooks() {
     librarySection.appendChild(tbl);
 }
 
+// Show the table because it's been persisted
+// This isn't an ideal way to make things work- we typically want to
+// Make things functional + repeatable. So we might have an "init" method to load
+// everything in the future, and when everything is ready, a "render" method to
+// make sure everything we want to be on the screen is on the screen.
+displayBooks();
+displayBookCards();
+
 /*
 =======================================
 bring up popup form
@@ -176,7 +192,36 @@ function addBookToLibrary() {
     let been_read = data.get('read');
     let book = new Book(title, author, pages, been_read);
     myLibrary.push(book);
+    persistLibrary(myLibrary);
     toggleModal();
     displayBooks();
     displayBookCards();
+}
+
+/**
+ * @returns the value from localStorage, or an empty array if that doesn't exist.
+ */
+function retrieveLibrary() {
+    // This can be null
+    const localStorageResult = window.localStorage.getItem(localStorageKeys.LIBRARY_KEY);
+    // null is falsy, so the inverse is "truthy".
+    if (!localStorageResult) {
+        // If there's nothing in localStorage, we want to return an empty array
+        const defaultReturn = [];
+        return defaultReturn;
+    }
+    // we have to "parse" it to get the javascript object out of the string
+    const parsed = JSON.parse(localStorageResult);
+    return parsed;
+}
+
+/**
+ * Persists the library to localStorage.
+ * Note: the persisted value MUST be a string.
+ * https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem
+ * @param {*} library array of books
+ */
+function persistLibrary(library) {
+    const stringifiedLibray = JSON.stringify(library);
+    window.localStorage.setItem(localStorageKeys.LIBRARY_KEY, stringifiedLibray);
 }
