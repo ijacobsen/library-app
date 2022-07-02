@@ -15,12 +15,14 @@ to input the details for the book:
     - whether it's been read
 
 
+DONE
 - add a button on each book's display to remove the book from
 the library
     - will need to associate your DOM elements with the actual
     book objects in some way
         - one soln is to give them a data-attribute that
         corresponds to the index of the library array
+
 
 - add a button on each book's display to change its READ status
     - to facilitate this you will want to create the
@@ -48,15 +50,20 @@ function Card(idx){
 }
 
 Card.prototype.removeBook = function(){
-    console.log('remove book id ' + this.bookId)
+    console.log('remove book id ' + this.id);
+
+    // remove card from library
+    myLibrary.splice(this.id, 1);
+
+    // rerender book shelf
+    displayBookCards();
 }
 
 Card.prototype.fillCard = function(entry){
 
+    // create div to store HTML content in
     this.HTMLContent = document.createElement('div');
     this.HTMLContent.setAttribute('class', 'bookCard');
-
-    console.log(entry)
 
     // set title
     let attr = document.createElement('div');
@@ -82,27 +89,16 @@ Card.prototype.fillCard = function(entry){
     attr.appendChild(attrText);
     this.HTMLContent.appendChild(attr);
 
-    /*
-    const newCard = document.createElement('div');
-    newCard.setAttribute('class', 'bookCard')
-    newCard.setAttribute('id', 'book-' + this.bookId);
-    for (var key in entry){
-        const attr = document.createElement('div');
-        const attrText = document.createTextNode(key + ': ' + entry[key]);
-        attr.appendChild(attrText);
-        newCard.appendChild(attr);
-    }
-    */
-
-
-    /*
+    // create remove button
     const removeButton = document.createElement('button');
     removeButton.addEventListener('click', this.removeBook);
-    removeButton.setAttribute('id', `remove-${this.bookId}`);
-    newCard.appendChild(removeButton);
-    */
+    removeButton.setAttribute('id', this.bookId);
+    removeButton.textContent = 'Remove From Library';
+    this.HTMLContent.appendChild(removeButton);
+
 }
 
+// display books as shelf
 function displayBookCards() {
 
     // clear current shelf
@@ -114,7 +110,6 @@ function displayBookCards() {
         entry = myLibrary[idx]
         let newCard = new Card(idx);
         newCard.fillCard(entry);
-        console.log(newCard);
         shelf.appendChild(newCard.HTMLContent);
     }
 
@@ -190,28 +185,3 @@ function addBookToLibrary(){
     displayBooks();
     displayBookCards();
 }
-
-/*
-=======================================
-remove book from library
-=======================================
-*/
-
-function deleteBook(o) {
-    var p = o.parentNode.parentNode;
-    p.parentNode.removeChild(p);
-}
-
-/*
-    <table>
-       <tr>
-           <td><input type="button" value="Delete Row" onclick="SomeDeleteRowFunction(this)"></td>
-       </tr>
-       <tr>
-           <td><input type="button" value="Delete Row" onclick="SomeDeleteRowFunction(this)"></td>
-       </tr>
-       <tr>
-           <td><input type="button" value="Delete Row" onclick="SomeDeleteRowFunction(this)"></td>
-       </tr>
-    </table>
-*/
