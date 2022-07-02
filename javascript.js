@@ -37,19 +37,19 @@ globals
 =======================================
 */
 
-let myLibrary = []
-function Book(title, author, pages, been_read){
+let myLibrary = [];
+function Book(title, author, pages, been_read) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.been_read = been_read;
 }
 
-function Card(idx){
+function Card(idx) {
     this.bookId = idx;
 }
 
-Card.prototype.removeBook = function(){
+Card.prototype.removeBook = function () {
     console.log('remove book id ' + this.id);
 
     // remove card from library
@@ -57,10 +57,9 @@ Card.prototype.removeBook = function(){
 
     // rerender book shelf
     displayBookCards();
-}
+};
 
-Card.prototype.fillCard = function(entry){
-
+Card.prototype.fillCard = function (entry) {
     // create div to store HTML content in
     this.HTMLContent = document.createElement('div');
     this.HTMLContent.setAttribute('class', 'bookCard');
@@ -95,41 +94,37 @@ Card.prototype.fillCard = function(entry){
     removeButton.setAttribute('id', this.bookId);
     removeButton.textContent = 'Remove From Library';
     this.HTMLContent.appendChild(removeButton);
-
-}
+};
 
 // display books as shelf
 function displayBookCards() {
-
     // clear current shelf
     let shelf = document.getElementById('bookCardShelf');
     shelf.replaceChildren();
-    
+
     // populate new shelf
-    for (var idx = 0; idx < myLibrary.length; idx++){
-        entry = myLibrary[idx]
+    for (var idx = 0; idx < myLibrary.length; idx++) {
+        entry = myLibrary[idx];
         let newCard = new Card(idx);
         newCard.fillCard(entry);
         shelf.appendChild(newCard.HTMLContent);
     }
-
 }
 
 // display books as a table
 function displayBooks() {
-    
     // delete current table
     let tbl = document.getElementById('bookTable');
     tbl.remove();
-    
+
     // create new table
     var author, title, pages, been_read;
     tbl = document.createElement('table');
     const tblBody = document.createElement('tbody');
-    for (var idx = 0; idx < myLibrary.length; idx++){
+    for (var idx = 0; idx < myLibrary.length; idx++) {
         const row = document.createElement('tr');
         entry = myLibrary[idx];
-        for (var key in entry){
+        for (var key in entry) {
             const cell = document.createElement('td');
             const cellText = document.createTextNode(entry[key]);
             cell.appendChild(cellText);
@@ -139,7 +134,7 @@ function displayBooks() {
         tblBody.appendChild(row);
     }
     tbl.appendChild(tblBody);
-    tbl.setAttribute('id', 'bookTable')
+    tbl.setAttribute('id', 'bookTable');
     let librarySection = document.getElementById('librarySection');
     librarySection.appendChild(tbl);
 }
@@ -171,8 +166,8 @@ add book to library
 =======================================
 */
 var submitBook = document.getElementById('submitBook');
-submitBook.addEventListener('click', addBookToLibrary)
-function addBookToLibrary(){
+submitBook.addEventListener('click', addBookToLibrary);
+function addBookToLibrary() {
     var form = document.getElementById('bookForm');
     const data = new FormData(form);
     let title = data.get('title');
