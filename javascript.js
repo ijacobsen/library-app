@@ -24,6 +24,7 @@ the library
         corresponds to the index of the library array
 
 
+DONE
 - add a button on each book's display to change its READ status
     - to facilitate this you will want to create the
     function that toggles a books read status on your
@@ -57,7 +58,6 @@ function Card(idx) {
 }
 
 Card.prototype.removeBook = function () {
-    console.log('remove book id ' + this.id);
 
     // remove card from library
     myLibrary.splice(this.id, 1);
@@ -67,7 +67,25 @@ Card.prototype.removeBook = function () {
     displayBookCards();
 };
 
+Card.prototype.toggleStatus = function () {
+
+    // toggle the status
+    if (myLibrary[this.id]['been_read'] === 'hasRead') {
+        myLibrary[this.id]['been_read'] = 'hasNotRead';
+    }
+    else {
+        myLibrary[this.id]['been_read'] = 'hasRead';
+    }
+
+    // persist it
+    persistLibrary(myLibrary);
+
+    // rerender book shelf
+    displayBookCards();
+}
+
 Card.prototype.fillCard = function (entry) {
+
     // create div to store HTML content in
     this.HTMLContent = document.createElement('div');
     this.HTMLContent.setAttribute('class', 'bookCard');
@@ -96,12 +114,21 @@ Card.prototype.fillCard = function (entry) {
     attr.appendChild(attrText);
     this.HTMLContent.appendChild(attr);
 
+    // toggle read status
+    const toggleStatusButton = document.createElement('button');
+    toggleStatusButton.addEventListener('click', this.toggleStatus);
+    toggleStatusButton.setAttribute('id', this.bookId);
+    toggleStatusButton.textContent = 'Toggle Read Status';
+    this.HTMLContent.appendChild(toggleStatusButton);
+
+
     // create remove button
     const removeButton = document.createElement('button');
     removeButton.addEventListener('click', this.removeBook);
     removeButton.setAttribute('id', this.bookId);
     removeButton.textContent = 'Remove From Library';
     this.HTMLContent.appendChild(removeButton);
+
 };
 
 // display books as shelf
