@@ -42,18 +42,6 @@ const localStorageKeys = {
     LIBRARY_KEY: 'myLibrary',
 };
 
-// Now that we have localStorage persistence,
-// every action we take on this library should be persisted
-let myLibrary = retrieveLibrary();
-
-/*
-function Book(title, author, pages, been_read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.been_read = been_read;
-}
-*/
 
 class Book {
     constructor(title, author, pages, been_read) {
@@ -75,7 +63,7 @@ class Card {
         persistLibrary(myLibrary);
     
         // rerender book shelf
-        displayBookCards();       
+        shelf.displayBookCards();       
     }
 
     toggleStatus() {
@@ -91,10 +79,10 @@ class Card {
         persistLibrary(myLibrary);
 
         // rerender book shelf
-        displayBookCards();
+        shelf.displayBookCards();
     }
 
-    fillCard() {
+    fillCard(entry) {
         // create div to store HTML content in
         this.HTMLContent = document.createElement('div');
         this.HTMLContent.setAttribute('class', 'bookCard');
@@ -141,20 +129,32 @@ class Card {
     }
 }
 
-// display books as shelf
-function displayBookCards() {
-    // clear current shelf
-    let shelf = document.getElementById('bookCardShelf');
-    shelf.replaceChildren();
+class Shelf {
+    constructor(){
 
-    // populate new shelf
-    for (var idx = 0; idx < myLibrary.length; idx++) {
-        entry = myLibrary[idx];
-        let newCard = new Card(idx);
-        newCard.fillCard(entry);
-        shelf.appendChild(newCard.HTMLContent);
+    }
+
+    displayBookCards() {
+        // clear current shelf
+        let shelf = document.getElementById('bookCardShelf');
+        shelf.replaceChildren();
+
+        // populate new shelf
+        for (var idx = 0; idx < myLibrary.length; idx++) {
+            let entry = myLibrary[idx];
+            let newCard = new Card(idx);
+            newCard.fillCard(entry);
+            shelf.appendChild(newCard.HTMLContent);
+        }
     }
 }
+
+// Now that we have localStorage persistence,
+// every action we take on this library should be persisted
+let myLibrary = retrieveLibrary();
+
+let shelf = new Shelf();
+
 
 // display books as a table... not used anymore
 function displayBooks() {
@@ -189,8 +189,7 @@ function displayBooks() {
 // Make things functional + repeatable. So we might have an "init" method to load
 // everything in the future, and when everything is ready, a "render" method to
 // make sure everything we want to be on the screen is on the screen.
-displayBooks();
-displayBookCards();
+shelf.displayBookCards();
 
 /*
 =======================================
@@ -231,9 +230,9 @@ function addBookToLibrary() {
     myLibrary.push(book);
     persistLibrary(myLibrary);
     toggleModal();
-    displayBooks();
-    displayBookCards();
+    shelf.displayBookCards();
 }
+
 
 /**
  * @returns the value from localStorage, or an empty array if that doesn't exist.
