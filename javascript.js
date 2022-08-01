@@ -46,11 +46,22 @@ const localStorageKeys = {
 // every action we take on this library should be persisted
 let myLibrary = retrieveLibrary();
 
+/*
 function Book(title, author, pages, been_read) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.been_read = been_read;
+}
+*/
+
+class Book {
+    constructor(title, author, pages, been_read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.been_read = been_read; 
+    }
 }
 
 class Card {
@@ -130,86 +141,6 @@ class Card {
     }
 }
 
-/*
-function Card(idx) {
-    this.bookId = idx;
-}
-
-Card.prototype.removeBook = function () {
-
-    // remove card from library
-    myLibrary.splice(this.id, 1);
-    persistLibrary(myLibrary);
-
-    // rerender book shelf
-    displayBookCards();
-};
-
-Card.prototype.toggleStatus = function () {
-
-    // toggle the status
-    if (myLibrary[this.id]['been_read'] === 'hasRead') {
-        myLibrary[this.id]['been_read'] = 'hasNotRead';
-    }
-    else {
-        myLibrary[this.id]['been_read'] = 'hasRead';
-    }
-
-    // persist it
-    persistLibrary(myLibrary);
-
-    // rerender book shelf
-    displayBookCards();
-}
-
-Card.prototype.fillCard = function (entry) {
-
-    // create div to store HTML content in
-    this.HTMLContent = document.createElement('div');
-    this.HTMLContent.setAttribute('class', 'bookCard');
-
-    // set title
-    let attr = document.createElement('div');
-    let attrText = document.createTextNode('Title: ' + entry['title']);
-    attr.appendChild(attrText);
-    this.HTMLContent.appendChild(attr);
-
-    // set author
-    attr = document.createElement('div');
-    attrText = document.createTextNode('Author: ' + entry['author']);
-    attr.appendChild(attrText);
-    this.HTMLContent.appendChild(attr);
-
-    // set pages
-    attr = document.createElement('div');
-    attrText = document.createTextNode('Pages: ' + entry['pages']);
-    attr.appendChild(attrText);
-    this.HTMLContent.appendChild(attr);
-
-    // set read status
-    attr = document.createElement('div');
-    attrText = document.createTextNode('Read: ' + (entry['been_read'] == 'hasRead' ? 'Yes' : 'No'));
-    attr.appendChild(attrText);
-    this.HTMLContent.appendChild(attr);
-
-    // toggle read status
-    const toggleStatusButton = document.createElement('button');
-    toggleStatusButton.addEventListener('click', this.toggleStatus);
-    toggleStatusButton.setAttribute('id', this.bookId);
-    toggleStatusButton.textContent = 'Toggle Read Status';
-    this.HTMLContent.appendChild(toggleStatusButton);
-
-
-    // create remove button
-    const removeButton = document.createElement('button');
-    removeButton.addEventListener('click', this.removeBook);
-    removeButton.setAttribute('id', this.bookId);
-    removeButton.textContent = 'Remove From Library';
-    this.HTMLContent.appendChild(removeButton);
-
-};
-*/
-
 // display books as shelf
 function displayBookCards() {
     // clear current shelf
@@ -225,7 +156,7 @@ function displayBookCards() {
     }
 }
 
-// display books as a table
+// display books as a table... not used anymore
 function displayBooks() {
     // delete current table
     let tbl = document.getElementById('bookTable');
